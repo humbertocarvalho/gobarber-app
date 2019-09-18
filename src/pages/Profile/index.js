@@ -9,10 +9,13 @@ import {
   SubmitButton,
   FormInput,
   Separator,
+  LogoutButton,
 } from './styles';
 
 import Background from '~/components/Background';
+
 import { updateProfileRequest } from '~/store/modules/user/actions';
+import { signOut } from '~/store/modules/auth/actions';
 
 export default function Profile() {
   const profile = useSelector(state => state.user.profile);
@@ -36,6 +39,7 @@ export default function Profile() {
     setPassword('');
     setConfirmPassword('');
   }, [profile]);
+
   function handleSubmit() {
     dispatch(
       updateProfileRequest({
@@ -46,6 +50,10 @@ export default function Profile() {
         confirmPassword,
       }),
     );
+  }
+
+  function handleLogout() {
+    dispatch(signOut());
   }
 
   return (
@@ -113,6 +121,9 @@ export default function Profile() {
           <SubmitButton loading={loading} onPress={handleSubmit}>
             Atualizar perfil
           </SubmitButton>
+          <LogoutButton loading={loading} onPress={handleLogout}>
+            Sair
+          </LogoutButton>
         </Form>
       </Container>
     </Background>
